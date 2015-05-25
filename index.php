@@ -9,10 +9,7 @@ include("header.php");
     <p>Clave</p>
     <input id="clave" name="clave" type="password"/><br />
     <input value="Entrar" id="entrar" type="submit" />
-<<<<<<< HEAD
     <div id="error"></div>
-=======
->>>>>>> 323e86d73e46e1f27b66e9d4b98228ea1c80cc23
 </div>
 <script>
 $(document).ready(function() {
@@ -23,11 +20,7 @@ $(document).ready(function() {
               if(data == "OK"){
                 window.location = "/form";
               }else if(data == "NOK"){
-<<<<<<< HEAD
                 $('#error').html('<p style="color: red" >Usuario o clave incorrectos</p>')
-=======
-                $('#formulario').append('<p style="color: red" >Usuario o clave incorrectos</p>')
->>>>>>> 323e86d73e46e1f27b66e9d4b98228ea1c80cc23
               }
               });
       } else {

@@ -1,16 +1,9 @@
-<<<<<<< HEAD
 <div class="col-md-12">
   <div id="footer">
     <img style="width: 98px; height: 65px;" alt="logous" src="/img/US.gif" />
     <img style="width: 198px; height: 65px;" alt="logo reina" src="/img/HospitalReinaSofiaCordoba-logo.jpg" />
     <img style="width: 198px; height: 65px;" alt="logo san juan" src="/img/san_juan.jpg" />
   </div>
-=======
-<div id="footer">
-  <img style="width: 98px; height: 65px;" alt="logous" src="/img/US.gif" />
-  <img style="width: 198px; height: 65px;" alt="logo reina" src="/img/HospitalReinaSofiaCordoba-logo.jpg" />
-  <img style="width: 198px; height: 65px;" alt="logo san juan" src="/img/san_juan.jpg" />
->>>>>>> 323e86d73e46e1f27b66e9d4b98228ea1c80cc23
 </div>
 <!-- Start of StatCounter Code for Default Guide -->
 <script type="text/javascript">

@@ -22,7 +22,6 @@ $inicio = date("Y-m-d", time() - 2419200);//2419200 segundos = 4 semanas;
   }
 }
 </script>
-<<<<<<< HEAD
 
 
 <div class="col-md-3">
@@ -59,18 +58,12 @@ $inicio = date("Y-m-d", time() - 2419200);//2419200 segundos = 4 semanas;
   <form id="form-consulta" method="post" action="/google-graph" target="_blank">
   <h3>Histórico de datos</h3>
   <p>Fármaco: <select name="farmaco_graf">
-=======
-<form id="form-registro" id="formulario" action="/insertar" method="get">
-<h3>Insertar datos</h3>
-<p>Fármaco: <select id="farmaco" name="farmaco">
->>>>>>> 323e86d73e46e1f27b66e9d4b98228ea1c80cc23
                 <option value="farmaco 1" selected="selected">Fármaco 1</option>
                 <option value="farmaco 2">Fármaco 2</option>
                 <option value="farmaco 3">Fármaco 3</option>
                 <option value="farmaco 4">Fármaco 4</option>
                 <option value="farmaco 5">Fármaco 5</option>
                 <option value="farmaco 6">Fármaco 6</option>
-<<<<<<< HEAD
                 </select></p>
   <p>Fecha inicio: <input type="date" name="inicio" /></p>
   <p>Fecha fin: <input type="date" name="fin" /></p>
@@ -91,32 +84,6 @@ $inicio = date("Y-m-d", time() - 2419200);//2419200 segundos = 4 semanas;
 include("footer.php");
 ?>
 
-=======
-            </select></p>
-<p>Precio: <input type="text" name="precio" /></p>
-<p>Cantidad: <input type="number" name="cantidad"></p>
-<p>Salida: <input type="text" id="departure-date" name="salida"></p>
-<p>Llegada: <input type="text" id="arrival-date" name="llegada"></p>
-<input type="submit" value="Enviar" onclick="form(); return false;">
-<input type="reset" value="Borrar">
-</form>
-
-<form id="form-consulta" method="post" action="/google-graph" target="_blank">
-<h3>Histórico de datos</h3>
-<p>Fármaco: <select name="farmaco_graf">
-              <option value="farmaco 1" selected="selected">Fármaco 1</option>
-              <option value="farmaco 2">Fármaco 2</option>
-              <option value="farmaco 3">Fármaco 3</option>
-              <option value="farmaco 4">Fármaco 4</option>
-              <option value="farmaco 5">Fármaco 5</option>
-              <option value="farmaco 6">Fármaco 6</option>
-              </select></p>
-<p>Fecha inicio: <input type="date" name="inicio" /></p>
-<p>Fecha fin: <input type="date" name="fin" /></p>
-<input type="submit" value="Mostrar" />
-</form>
-<div id="chart_div"></div>
->>>>>>> 323e86d73e46e1f27b66e9d4b98228ea1c80cc23
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -159,12 +126,4 @@ function drawChartarea() {
           chart.draw(dataarea, optionsarea);
     });
 }
-<<<<<<< HEAD
 </script>
-=======
-</script>
-
-<?
-include("footer.php");
-?>
->>>>>>> 323e86d73e46e1f27b66e9d4b98228ea1c80cc23

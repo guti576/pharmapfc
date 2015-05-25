@@ -531,11 +531,11 @@ int main(int argc, char *argv[]){
 									printf("ERROR9: No existe ninguna posibilidad válida para nuestro problema\n");
 									error = 9;
 								}else{
-									printf("Jmin= %f\nVector Óptimo de pedido:", Jmin);
+									printf("Jmin= %f\nPedido:", Jmin);
 									for(x=0;x<TAM; x++){
 										printf("%d ",vectorOptimo[x] );
 									}
-									printf("\nStock del pedido óptimo:");
+									printf("\nOptimo:");
 									for(x=0;x<TAM; x++){
 										printf("%d ",stockOptimo[x] );
 									}
@@ -546,9 +546,7 @@ int main(int argc, char *argv[]){
 									inicializaMatriz(numPedidos, 3, &FechasPedido);
 									//A partir de obtener los valores optimos de días de pedidos
 									//debemos obtener ahora las fechas con su correspondiente valor
-									printf("\n\n");
-									printf("===============\n===Resultado===\n===============\n\n");
-
+									
 									obtieneFechasPedidos(vectorOptimo, TAM, FechasPedido);
 								}
 							}
