@@ -52,6 +52,7 @@ if($title != "Acceso al portal"){
           ?>
           <li><a href="/panel-de-control"><i class="fa fa-cogs">  Panel del Control</i></a></li>
           <li><a href="#"><i class="fa fa-cloud-upload"></i>  Subir fichero</a></li>
+          <li><a href="/calculate"><i class="fa fa-calculator"></i>  Calcular pedido</a></li>
           <?}?>
           <li><a href="/form"><i class="fa fa-bar-chart"></i>  Inicio</a></li>
           <li><a href="/log-out"><i class="fa fa-sign-out"></i>  Cerrar sesión</a></li>
