@@ -19,21 +19,9 @@ $result = mysqli_query($conn, $sql);
 //echo mysqli_affected_rows($conn);
 $index = 0;
 $response = array();
-//$bar = "['Fecha', 'Stock']";
-//array_push($response, $bar);
 
 while($block = mysqli_fetch_assoc($result)){
-
-  if($index == 0){
-    $calendar = '[ new Date('.str_replace("-", ", ", $block['fecha']).'), '.$block['cantidad'].' ]';
-    $bar = json_encode(array($block['fecha'],$block['cantidad']));
-    array_push($response, $bar);
-  }else{
-    $calendar .= ', [ new Date('.str_replace("-", ", ", $block['fecha']).'), '.$block['cantidad'].' ]';
-    $bar = json_encode(array($block['fecha'],$block['cantidad']));
-    array_push($response, $bar);
-  }
-  $index++;
+  array_push($response, array("fecha" => $block['fecha'], "pedido" => intval($block['cantidad'])));
 }
-echo json_encode($response);
+echo json_encode(array("status" => "OK", "data" => $response));
 ?>
