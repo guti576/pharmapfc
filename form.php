@@ -6,35 +6,12 @@ $fin = date("Y-m-d"); //hoy
 $inicio = date("Y-m-d", time() - 2419200);//2419200 segundos = 4 semanas;
 
 ?>
-<script>
-  $(function() {
-    var departure = $('#departure-date').datepicker().val();
-    var arrival = $( "#arrival-date" ).datepicker().val();
-  });
-</script>
-<script type="text/javascript">
-  function form(){
-    //alert($("#departure-date").val());
-    if($("#departure-date").val() != "" && $("#arrival-date").val() != "") {
-      $("#formulario").submit();
-    } else {
-      alert("Salida o llegada incompletos");
-  }
-}
-</script>
+
+<div class="col-md-3"></div>
 
 
 <div class="col-md-3">
-  <form action="upload" method="post" enctype="multipart/form-data">
-      <h3>Subir Fichero:</h3>
-      <input type="file" name="fileToUpload" id="fileToUpload">
-      <input type="submit" value="Subir Fichero" name="submit">
-  </form>
-</div>
-
-
-<div class="col-md-3">
-  <form id="form-registro" id="formulario" action="/insertar" method="get">
+  <form id="form-registro">
   <h3>Insertar datos</h3>
   <p>Fármaco: <select id="farmaco" name="farmaco">
                   <option value="farmaco 1" selected="selected">Fármaco 1</option>
@@ -44,12 +21,11 @@ $inicio = date("Y-m-d", time() - 2419200);//2419200 segundos = 4 semanas;
                   <option value="farmaco 5">Fármaco 5</option>
                   <option value="farmaco 6">Fármaco 6</option>
               </select></p>
-  <p>Precio: <input type="text" name="precio" /></p>
-  <p>Cantidad: <input type="number" name="cantidad"></p>
-  <p>Salida: <input type="text" id="departure-date" name="salida"></p>
-  <p>Llegada: <input type="text" id="arrival-date" name="llegada"></p>
-  <input type="submit" value="Enviar" onclick="form(); return false;">
+  <p>Cantidad: <input type="number" id="consumo" name="cantidad"></p>
+  <p>Fecha: <input type="date" id="insert-date" name="llegada"></p>
+  <input type="submit" value="Enviar">
   <input type="reset" value="Borrar">
+  <p id="msg-insertar" style="color: red"></p>
   </form>
 </div>
 
@@ -65,9 +41,10 @@ $inicio = date("Y-m-d", time() - 2419200);//2419200 segundos = 4 semanas;
                 <option value="farmaco 5">Fármaco 5</option>
                 <option value="farmaco 6">Fármaco 6</option>
                 </select></p>
-  <p>Fecha inicio: <input type="date" name="inicio" /></p>
-  <p>Fecha fin: <input type="date" name="fin" /></p>
+  <p>Fecha inicio: <input id="fecha-inicio" type="date" name="inicio" /></p>
+  <p>Fecha fin: <input id="fecha-fin" type="date" name="fin" /></p>
   <input type="submit" value="Mostrar" />
+  <input type="reset" value="Borrar">
   </form>
 </div>
 
@@ -87,9 +64,50 @@ include("footer.php");
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+  
   $("#farmaco").change(function(){
     console.log("change");
     drawChartarea();
+  });
+  
+  $('#form-registro').submit(function(){
+    
+    var fecha = $("#insert-date").val();
+    var consumo = $("#consumo").val();
+    var farmaco = $("#farmaco").val();
+    
+    $('#msg-insertar').empty();
+    
+    if(fecha != "" && consumo != "") {
+      
+      $.ajax({
+        method: "POST",
+        url: "insertar.php",
+        data: { fecha: fecha, consumo: consumo, farmaco: farmaco }
+      })
+        .done(function( msg ) {
+          if(msg){
+            $('#msg-insertar').html("Registrado con éxito");
+            drawChartarea();
+          }
+          else
+            $('#msg-insertar').html("Error al registrar");
+        });
+      
+      return false;
+    } else {
+      alert("Fecha o consumo incompletos");
+      return false;
+    }
+  });
+  
+  $('#form-consulta').submit(function(){
+    if($("#fecha-inicio").val() != "" && $("#fecha-fin").val() != "") {
+      return true;
+    } else {
+      alert("Inicio o fin incompletos");
+      return false;
+    }
   });
 
 });
@@ -100,21 +118,18 @@ function drawChartarea() {
   $.ajax({
     type: "POST",
     url: "/grafica",
+    dataType: "json",
     data: { inicio: '<?=$inicio?>', fin: '<?=$fin?>', farmaco_graf: $('#farmaco').val()}
     })
-    .done(function( data ) {
-          //console.log("ajax: " + JSON.parse(data));
-          maindata = JSON.parse(data); // now maindata es un array
-          //console.log("maindata: " + maindata);
-          table = [['Fecha', 'Consumo']]; //funciona
-          maindata.forEach(function(entry) {
-              entry = JSON.parse(entry);
-              entry = [entry[0], parseInt(entry[1])];
-              table.push(entry);
-          });
-          console.log( "table: " + table );
+    .done(function( jsonData ) {
 
-          var dataarea = google.visualization.arrayToDataTable(table);
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'Fecha');
+          data.addColumn('number', 'Consumo');
+
+          for (var i = 0; i < jsonData.data.length; i++) {
+            data.addRow([jsonData.data[i].fecha, jsonData.data[i].pedido]);
+          }
           var optionsarea = {
             colors: ['red'],
             title: 'Consumo del ' + $('#farmaco').val(),
@@ -123,7 +138,7 @@ function drawChartarea() {
           };
 
           var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-          chart.draw(dataarea, optionsarea);
+          chart.draw(data, optionsarea);
     });
 }
 </script>

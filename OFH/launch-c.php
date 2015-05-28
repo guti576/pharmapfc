@@ -1,8 +1,12 @@
 <?
 $output = shell_exec('./OFH 10 5');
-
-//echo $output;
+echo $output;die();
 $output = explode("\n", trim($output, "\n"));
+
+if(trim($output[0]) == "ERROR9: No existe ninguna posibilidad válida para nuestro problema"){
+  echo json_encode(array("status" => "ERROR9"));
+  die();
+}
 
 //Quitamos el inicio de la frase
 $pedidos = str_replace("Pedido:", "", $output[1]);
@@ -24,5 +28,5 @@ for($i=0; $i<count($pedidos); $i++){
   array_push($data, array("fecha" => $date, "pedido" => intval($pedidos[$i]), "optimo" => intval($optimos[$i])));
   $date = date("Y-m-d", strtotime($date) + 86400);
 }
-echo json_encode($data);
+echo json_encode(array("status" => "OK", "data" => $data));
 ?>

@@ -1,10 +1,10 @@
 <?
 include('header.php');
 
-for($i = 0; $i <= 6000; $i++){
-  $fecha= rand(strtotime("2010-01-01"),strtotime("now"));
+for($i = 0; $i <= 16000; $i++){
+  $fecha= rand(strtotime("now") - 2419200,strtotime("now"));
   $nombre = "farmaco " . rand(1, 10);
-  $cantidad = rand(300, 700);
+  $cantidad = rand(1, 10);
   //echo date("d-M-Y", $fecha);
   echo "<br/>";
   $sql = "INSERT INTO `registro` (`nombre`, `fecha`, `cantidad`) VALUES ('$nombre', '".date("Y-m-d", $fecha)."', '$cantidad') ON DUPLICATE KEY UPDATE `cantidad` = '$cantidad'";
