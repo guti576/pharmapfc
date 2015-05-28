@@ -1,13 +1,26 @@
 <?
-$title = "Media aritmética";
-include("header.php");
+//$title = "Media aritmética";
+//include("header.php");
+
+$conn = mysqli_connect("db560723553.db.1and1.com", "dbo560723553", "h0spital", "db560723553");
+//echo "<pre>";var_dump($conn);die();
+mysqli_set_charset($conn, "utf8");
+// Check connection
+if (mysqli_connect_errno()){
+  echo "Imposible conectar: " . mysqli_connect_error();
+}
+
 
 $inicio = $_GET['inicio']; //yyyy-mm-dd
 $fin = $_GET['fin'];
+
+$fin = date("Y-m-d"); //hoy
+$inicio = date("Y-m-d", time() - 2419200);//2419200 segundos = 4 semanas;
+
 $farmaco = urldecode($_GET['farmaco']);
 
 //Fichero donde escribiremos
-$file = 'OFH/datos2.pha';
+$file = 'OFH/datos.pha';
 //Abrimos el fichero
 $contenido = file_get_contents($file);
 //Borramos el fichero
