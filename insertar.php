@@ -1,25 +1,18 @@
 <?
-include("header.php");
+$conn = mysqli_connect("db560723553.db.1and1.com", "dbo560723553", "h0spital", "db560723553");
+//echo "<pre>";var_dump($conn);die();
+mysqli_set_charset($conn, "utf8");
+// Check connection
+if (mysqli_connect_errno()){
+  echo "Imposible conectar: " . mysqli_connect_error();
+}
 
-$salida = explode("/", $_GET['salida']);
-$salida = $salida[2] ."-". $salida[0] ."-". $salida[1];
+$fecha = $_POST['fecha'];
+$consumo = $_POST['consumo'];
+$farmaco = $_POST['farmaco'];
 
-$llegada = explode("/", $_GET['llegada']);
-$llegada = $llegada[2] ."-". $llegada[0] ."-". $llegada[1];
+$sql = "INSERT INTO `registro`(`nombre`, `cantidad`, `fecha`) VALUES ('".$farmaco."', ".$consumo.", '".$fecha."') ON DUPLICATE KEY UPDATE `cantidad` = ".$consumo;
 
+echo mysqli_query($conn, $sql);
 
-$sql = "INSERT INTO `registro`(`nombre`, `cantidad`, `salida`, `entrada`, `month`, `year`) VALUES ('".$_GET['farmaco']."', '".intval($_GET['cantidad'])."', '$salida','$llegada', '".date("n", strtotime($_GET['salida']))."', '".date("Y", strtotime($_GET['salida']))."')";
-mysqli_query($conn, $sql);
-
-//echo $sql; die();
-echo "nombre: " . $_GET['farmaco'] . "</br>";
-
-echo "cantidad: " . intval($_GET['cantidad']) . "</br>";
-
-echo "salida: " . $_GET['salida'] . "</br>";
-//yyyy-mm-dd
-echo "llegada: " . $_GET['llegada'];
-
-include("footer.php");
-  
 ?>

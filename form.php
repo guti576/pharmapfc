@@ -7,17 +7,11 @@ $inicio = date("Y-m-d", time() - 2419200);//2419200 segundos = 4 semanas;
 
 ?>
 
-<div class="col-md-3">
-  <form action="upload" method="post" enctype="multipart/form-data">
-      <h3>Subir Fichero:</h3>
-      <input type="file" name="fileToUpload" id="fileToUpload">
-      <input type="submit" value="Subir Fichero" name="submit">
-  </form>
-</div>
+<div class="col-md-3"></div>
 
 
 <div class="col-md-3">
-  <form id="form-registro" action="/insertar" method="get">
+  <form id="form-registro">
   <h3>Insertar datos</h3>
   <p>Fármaco: <select id="farmaco" name="farmaco">
                   <option value="farmaco 1" selected="selected">Fármaco 1</option>
@@ -31,6 +25,7 @@ $inicio = date("Y-m-d", time() - 2419200);//2419200 segundos = 4 semanas;
   <p>Fecha: <input type="date" id="insert-date" name="llegada"></p>
   <input type="submit" value="Enviar">
   <input type="reset" value="Borrar">
+  <p id="msg-insertar" style="color: red"></p>
   </form>
 </div>
 
@@ -76,8 +71,30 @@ $(document).ready(function() {
   });
   
   $('#form-registro').submit(function(){
-    if($("#insert-date").val() != "" && $("#consumo").val() != "") {
-      return true;
+    
+    var fecha = $("#insert-date").val();
+    var consumo = $("#consumo").val();
+    var farmaco = $("#farmaco").val();
+    
+    $('#msg-insertar').empty();
+    
+    if(fecha != "" && consumo != "") {
+      
+      $.ajax({
+        method: "POST",
+        url: "insertar.php",
+        data: { fecha: fecha, consumo: consumo, farmaco: farmaco }
+      })
+        .done(function( msg ) {
+          if(msg){
+            $('#msg-insertar').html("Registrado con éxito");
+            drawChartarea();
+          }
+          else
+            $('#msg-insertar').html("Error al registrar");
+        });
+      
+      return false;
     } else {
       alert("Fecha o consumo incompletos");
       return false;
