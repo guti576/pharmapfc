@@ -20,6 +20,7 @@ $inicio = date("Y-m-d", time() - 2419200);//2419200 segundos = 4 semanas;
                   <option value="farmaco 4">Fármaco 4</option>
                   <option value="farmaco 5">Fármaco 5</option>
                   <option value="farmaco 6">Fármaco 6</option>
+                  <option value="trastuzumab">Trastuzumab</option>
               </select></p>
   <p>Cantidad: <input type="number" id="consumo" name="cantidad"></p>
   <p>Fecha: <input type="date" id="insert-date" name="llegada"></p>
@@ -40,6 +41,7 @@ $inicio = date("Y-m-d", time() - 2419200);//2419200 segundos = 4 semanas;
                 <option value="farmaco 4">Fármaco 4</option>
                 <option value="farmaco 5">Fármaco 5</option>
                 <option value="farmaco 6">Fármaco 6</option>
+                <option value="trastuzumab">Trastuzumab</option>
                 </select></p>
   <p>Fecha inicio: <input id="fecha-inicio" type="date" name="inicio" /></p>
   <p>Fecha fin: <input id="fecha-fin" type="date" name="fin" /></p>
