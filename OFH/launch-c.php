@@ -1,6 +1,6 @@
 <?
 $output = shell_exec('./OFH 10 5');
-echo $output;die();
+//echo $output;die();
 $output = explode("\n", trim($output, "\n"));
 
 if(trim($output[0]) == "ERROR9: No existe ninguna posibilidad válida para nuestro problema"){

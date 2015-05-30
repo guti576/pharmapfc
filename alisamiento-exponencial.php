@@ -18,6 +18,14 @@ while($item = mysqli_fetch_assoc($result)){
 
 $alpha = 0.1;
 while($alpha <= 1){
+  
+  //Fichero donde escribiremos
+  $file = 'alisamiento/grafica_'.$alpha.'.pha';
+  //Abrimos el fichero
+  $contenido = file_get_contents($file);
+  //Borramos el fichero
+  $contenido = "";
+  
 $pronosticos = array();
 $errors = array();
 //$consumos = [200,230,260,180,270,240,250,300,320,350,240,210];
@@ -41,7 +49,7 @@ echo "\nalpha = " . $alpha . "\n";
   </tr>
 <?
 array_push($errors, abs($pronosticos[0] - $consumos[0]));
-$document = $fechas[0]."\t".$consumos[0] . "\t".$pronosticos[0]. "<br>";
+$contenido = $fechas[0]."\t".$consumos[0] . "\t".$pronosticos[0]. "\t".$errors[0]. "\n";
 
 for($i = 1; $i < count($consumos); $i ++){
   $pronosticos[$i] = $consumos[$i-1] * $alpha + (1 - $alpha) * $pronosticos[$i-1];
@@ -54,7 +62,7 @@ for($i = 1; $i < count($consumos); $i ++){
   </tr>
   <?
   array_push($errors, abs($pronosticos[$i] - $consumos[$i]));
-  $document .= $fechas[$i]."\t".$consumos[$i] . "\t".$pronosticos[$i]. "<br>";
+  $contenido .= $fechas[$i]."\t".$consumos[$i] . "\t".$pronosticos[$i]. "\t".$errors[$i]. "\n";
   
   }
   ?>
@@ -64,7 +72,9 @@ $average = array_sum($errors) / count($errors);
 $alpha = $alpha + 0.1;
 echo "error medio: " . $average;
 echo "<br><br><br>";
-echo $document;die();
+
+// Escribir en el fichero
+file_put_contents($file, trim($contenido, "\n"));
 }
 //echo "<pre>"; print_r($pronosticos);
 ?>
