@@ -20,6 +20,7 @@ $inicio = date("Y-m-d", time() - 2419200);//2419200 segundos = 4 semanas;
                   <option value="farmaco 4">Fármaco 4</option>
                   <option value="farmaco 5">Fármaco 5</option>
                   <option value="farmaco 6">Fármaco 6</option>
+                  <option value="trastuzumab">Trastuzumab</option>
               </select></p>
   <p>Cantidad: <input type="number" id="consumo" name="cantidad"></p>
   <p>Fecha: <input type="date" id="insert-date" name="llegada"></p>
@@ -40,6 +41,7 @@ $inicio = date("Y-m-d", time() - 2419200);//2419200 segundos = 4 semanas;
                 <option value="farmaco 4">Fármaco 4</option>
                 <option value="farmaco 5">Fármaco 5</option>
                 <option value="farmaco 6">Fármaco 6</option>
+                <option value="trastuzumab">Trastuzumab</option>
                 </select></p>
   <p>Fecha inicio: <input id="fecha-inicio" type="date" name="inicio" /></p>
   <p>Fecha fin: <input id="fecha-fin" type="date" name="fin" /></p>
@@ -51,11 +53,13 @@ $inicio = date("Y-m-d", time() - 2419200);//2419200 segundos = 4 semanas;
 
 <div class="col-md-3"></div>
 
+<div class="col-md-12">
+  <div id="table_div"></div>
+</div>
 
 <div class="col-md-12">
   <div id="chart_div"></div>
 </div>
-
 
 <?
 include("footer.php");
@@ -112,8 +116,9 @@ $(document).ready(function() {
 
 });
 
-google.load("visualization", "1.1", {packages:["corechart"]});
+google.load("visualization", "1.1", {packages:["corechart", "table"]});
 google.setOnLoadCallback(drawChartarea);
+
 function drawChartarea() {
   $.ajax({
     type: "POST",
@@ -122,6 +127,10 @@ function drawChartarea() {
     data: { inicio: '<?=$inicio?>', fin: '<?=$fin?>', farmaco_graf: $('#farmaco').val()}
     })
     .done(function( jsonData ) {
+
+          /**********************************************************************
+                                  PRINT AREA CHART                                
+          **********************************************************************/
 
           var data = new google.visualization.DataTable();
           data.addColumn('string', 'Fecha');
@@ -134,11 +143,27 @@ function drawChartarea() {
             colors: ['red'],
             title: 'Consumo del ' + $('#farmaco').val(),
             hAxis: {title: 'Fecha',  titleTextStyle: {color: '#333'}},
-            vAxis: {minValue: 0}
+            vAxis: {minValue: 0},
           };
-
+          
           var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
           chart.draw(data, optionsarea);
+
+          /**********************************************************************
+                                  PRINT TABLE CHART                                
+          **********************************************************************/
+
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'Fecha');
+          data.addColumn('number', 'Consumo ' + $('#farmaco').val());
+          for (var i = 0; i < jsonData.data.length; i++) {
+            data.addRow([jsonData.data[i].fecha, jsonData.data[i].pedido]);
+          }
+
+
+          console.log(document.getElementById('table_div'));
+          var table = new google.visualization.Table(document.getElementById('table_div'));
+          table.draw(data, {showRowNumber: true, width: '30%'});
     });
 }
 </script>
